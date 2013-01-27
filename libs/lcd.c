@@ -1,9 +1,4 @@
 #include "lcd.h"
-unsigned volatile char temperature = 0;
-unsigned volatile char destination = 50;
-unsigned volatile char air_mode = 0;
-unsigned volatile char heat_off = 0;
-unsigned volatile int air_counter = 0;
 
 void lcd_init()
 {

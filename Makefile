@@ -17,6 +17,7 @@ OBJECTS    = main.o
 OBJECTS    += $(LIBDIR)/HD44780.o
 OBJECTS    += $(LIBDIR)/lcd.o
 OBJECTS    += $(LIBDIR)/led.o
+OBJECTS    += $(LIBDIR)/sens.o
 OBJECTS    += $(LIBDIR)/buttons.o
 FUSES      = -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xf9:m
 

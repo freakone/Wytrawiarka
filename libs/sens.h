@@ -4,3 +4,4 @@
 #include "globals.h"
 
 void adc_init();
+SIGNAL (SIG_ADC);

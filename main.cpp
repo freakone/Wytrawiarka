@@ -6,23 +6,13 @@
 #include "libs/led.h"
 #include "libs/buttons.h"
 #include "libs/globals.h"
+#include "libs/sens.h"
 
-void adc_init()
-{
-	DDRC &= ~(1 << PC4);
-	DDRC &= ~(1 << PC5);	
-	ADCSRA = (1 << ADEN) | (1 << ADIE)  | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2) | (1 << ADATE);
-	ADMUX = (1 << REFS0) | (1 << MUX2);
-	ADCSRA |= (1 << ADSC);
-	
-}
-
-SIGNAL (SIG_ADC)
-{
-	int temp = (ADCL | (ADCH << 8))*500;
-	temp /= 1024;
-	temperature = temp;
-}
+unsigned volatile char temperature = 0;
+unsigned volatile char destination = 50;
+unsigned volatile char air_mode = 0;
+unsigned volatile char heat_off = 0;
+unsigned volatile int air_counter = 0;
 
 void temp_check()
 {
