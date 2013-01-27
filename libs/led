@@ -1,0 +1,2 @@
+void led_init();
+SIGNAL(TIMER0_OVF_vect);

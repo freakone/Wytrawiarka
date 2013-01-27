@@ -15,6 +15,9 @@ PROGRAMMER = -c usbasp -P usb -F
 LIBDIR     = libs
 OBJECTS    = main.o
 OBJECTS    += $(LIBDIR)/HD44780.o
+OBJECTS    += $(LIBDIR)/lcd.o
+OBJECTS    += $(LIBDIR)/led.o
+OBJECTS    += $(LIBDIR)/buttons.o
 FUSES      = -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xf9:m
 
 # Tune the lines below only if you know what you are doing:
