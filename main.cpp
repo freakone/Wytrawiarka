@@ -13,29 +13,30 @@ unsigned volatile char destination = 50;
 unsigned volatile char air_mode = 0;
 unsigned volatile char heat_off = 0;
 unsigned volatile int air_counter = 0;
+unsigned volatile char blinker_off = 0;
 
 void temp_check()
 {
-	if(heat_off == 1)
-	{
-		PORTD &= ~(1 << PD3);
-		TIMSK0 = 0;
-		OCR1A = 0;
-		OCR1B = 255;
-		OCR2A = 0;
-	}
-	else
 	if(temperature > destination)
 	{
 		PORTD &= ~(1 << PD3);
-		TIMSK0 = 0;
+		blinker_off = 1;
 		OCR1A = 0;
 		OCR1B = 0;
 		OCR2A = 255;
 	}
-	else if(temperature < (destination - 3))
+	else
+	if(heat_off == 1)
 	{
-		TIMSK0 = (1 << TOIE0);
+		PORTD &= ~(1 << PD3);
+		blinker_off = 1;
+		OCR1A = 0;
+		OCR1B = 255;
+		OCR2A = 0;
+	}
+	else if(temperature < (destination - 1))
+	{
+		blinker_off = 0;
 		PORTD |= (1 << PD3);			
 	}
 }
@@ -69,7 +70,15 @@ void air_check()
 
 
 int main(void) 
- {  
+ {  	
+	destination = eeprom_read_word(( uint16_t *)1) ;
+	air_mode = eeprom_read_word(( uint16_t *)10) ;
+		
+	if(destination > 90)
+	{
+		destination = 50;
+		air_mode = 0;
+	}
 	lcd_init();
 	led_init();
 	adc_init();

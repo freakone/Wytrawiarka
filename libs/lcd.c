@@ -23,10 +23,31 @@ void lcd_print_main_screen()
 	LCD_WriteText("HEAT:OFF AIR:OFF");
 }
 
+void lcd_print_save_screen()
+{
+	LCD_Clear();
+	LCD_GoTo(0,0);
+	LCD_WriteText("USTAWIENIA");
+	LCD_GoTo(0,1);
+	LCD_WriteText("ZOSTALY ZAPISANE");
+}
+
+
 unsigned volatile char last_temp = 0;
 unsigned volatile char last_dest = 0;
 unsigned volatile char last_heat = 5;
 unsigned volatile char last_air = 5;
+unsigned volatile char last_heat_off = 5;
+
+void lcd_last_reset()
+{
+	last_temp = 0;
+	last_dest = 0;
+	last_heat = 5;
+	last_air = 5;
+	last_heat_off = 5;
+}
+
 void lcd_update()
 {
 	char str[10];
@@ -66,7 +87,7 @@ void lcd_update()
 		last_air = air_mode;
 	}
 	
-	if(last_heat != (PORTD & (1<<PD3)))
+	if(last_heat != (PORTD & (1<<PD3)) || heat_off != last_heat_off)
 	{
 		LCD_GoTo(5,1);
 		if(heat_off == 1)
@@ -76,5 +97,6 @@ void lcd_update()
 		else
 			LCD_WriteText("OFF ");
 		last_heat = (PORTD & (1<<PD3));
+		last_heat_off = heat_off;
 	}
 }

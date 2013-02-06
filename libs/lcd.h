@@ -7,4 +7,6 @@
 
 void lcd_init();
 void lcd_print_main_screen();
+void lcd_print_save_screen();
 void lcd_update();
+void lcd_last_reset();
